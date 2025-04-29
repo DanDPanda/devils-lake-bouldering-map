@@ -1,68 +1,62 @@
-'use client'
-
-import 'leaflet/dist/leaflet.css'
-import 'leaflet-defaulticon-compatibility'
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css'
-import Checkbox from '@mui/material/Checkbox'
-import { useState } from 'react'
+import "leaflet/dist/leaflet.css";
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
+import Checkbox from "@mui/material/Checkbox";
+import { useState } from "react";
 
 interface MarkerData {
-  latitude: number
-  longitude: number
-  url: string
-  location: string
-  rating: string
-  stars: number
-  route: string | number
+  latitude: number;
+  longitude: number;
+  url: string;
+  location: string;
+  rating: string;
+  stars: number;
+  route: string | number;
 }
 
 interface Props {
-  visibleMarkers: MarkerData[]
-  markers: MarkerData[]
-  setCurrentMarkers: (markers: MarkerData[]) => void
+  visibleMarkers: MarkerData[];
+  markers: MarkerData[];
+  setCurrentMarkers: (markers: MarkerData[]) => void;
 }
 
 export default function MapHeader({
   visibleMarkers,
   markers,
-  setCurrentMarkers
+  setCurrentMarkers,
 }: Props) {
-  const [isStarFilterOn, setIsStarFilterOn] =
-    useState(false)
+  const [isStarFilterOn, setIsStarFilterOn] = useState(false);
 
   return (
     <div
       style={{
-        width: '100%'
+        width: "100%",
       }}
     >
       <div
         style={{
-          backgroundColor: 'white',
-          border: '1px solid black',
-          color: 'black',
-          width: '100%'
+          backgroundColor: "white",
+          border: "1px solid black",
+          color: "black",
+          width: "100%",
         }}
       >
-        Visible Markers: {visibleMarkers.length} | 3.5+
-        Filter:
+        Visible Markers: {visibleMarkers.length} | 3.5+ Filter:
         <Checkbox
-          value={'3.5+'}
+          value={"3.5+"}
           onChange={() => {
             if (isStarFilterOn) {
-              setIsStarFilterOn(false)
-              setCurrentMarkers(markers)
+              setIsStarFilterOn(false);
+              setCurrentMarkers(markers);
             } else {
-              setIsStarFilterOn(true)
+              setIsStarFilterOn(true);
               setCurrentMarkers(
-                markers.filter(
-                  (marker) => marker.stars >= 3.5
-                )
-              )
+                markers.filter((marker) => marker.stars >= 3.5)
+              );
             }
           }}
         />
       </div>
     </div>
-  )
+  );
 }
