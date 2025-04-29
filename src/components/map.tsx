@@ -185,7 +185,13 @@ export default function MapComponent() {
                     <br />
                     {data.rating}
                     <br />
-                    <a href={data.url}>Link</a>
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={data.url}
+                    >
+                      Mountain Project Link
+                    </a>
                   </>
                 </Popup>
               </Marker>
