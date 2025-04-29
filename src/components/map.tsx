@@ -12,7 +12,7 @@ import { eastBluffSouthData } from "../data/east-bluff-south";
 import { eastBluffSouthFaceData } from "../data/east-bluff-south-face";
 import { useState, useEffect, useMemo } from "react";
 import MapHeader from "./mapHeader";
-import * as L from "leaflet";
+import coloredMarkers from "./coloredMarkers";
 
 interface MarkerData {
   latitude: number;
@@ -25,28 +25,6 @@ interface MarkerData {
   icon: Icon;
   zIndex: number;
 }
-
-const greenIcon = new L.Icon({
-  iconUrl:
-    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
-
-const redIcon = new L.Icon({
-  iconUrl:
-    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41],
-});
 
 const markers: MarkerData[] = [];
 
@@ -76,6 +54,13 @@ combinedData.forEach((data) => {
       tempData[direction] -= 0.0001;
     }
   }
+  let vGrade;
+  if (tempData.Rating[1] === "." || tempData.Rating[1] === "-") {
+    const vLetter = tempData.Rating.indexOf("V");
+    vGrade = tempData.Rating[vLetter + 1] as keyof typeof coloredMarkers;
+  } else {
+    vGrade = tempData.Rating[1] as keyof typeof coloredMarkers;
+  }
   markers.push({
     latitude: tempData["Area Latitude"],
     longitude: tempData["Area Longitude"],
@@ -84,7 +69,7 @@ combinedData.forEach((data) => {
     rating: tempData.Rating,
     stars: tempData["Avg Stars"],
     route: tempData.Route,
-    icon: greenIcon,
+    icon: coloredMarkers[vGrade] || coloredMarkers[0],
     zIndex: 0,
   });
 });
@@ -136,7 +121,7 @@ export default function MapComponent() {
     );
     items[item] = {
       ...items[item],
-      icon: redIcon,
+      icon: coloredMarkers[1],
       zIndex: 100,
     };
 
