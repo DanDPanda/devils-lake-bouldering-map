@@ -3,9 +3,6 @@ import type { LatLngExpression, Map, Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { minnesotaData } from "../data/minnesota";
-import { wisconsinData } from "../data/wisconsin";
-import { southDakotaData } from "../data/south-dakota";
 import { southBluffData } from "../data/south-bluff";
 import { westBluffSouthData } from "../data/west-bluff-south";
 import { westBluffCentralData } from "../data/west-bluff-central";
@@ -14,7 +11,6 @@ import { eastBluffNorthData } from "../data/east-bluff-north";
 import { eastBluffSouthData } from "../data/east-bluff-south";
 import { eastBluffSouthFaceData } from "../data/east-bluff-south-face";
 import { useState, useEffect, useMemo } from "react";
-import MapList from "./mapList";
 import MapHeader from "./mapHeader";
 import * as L from "leaflet";
 
@@ -62,8 +58,6 @@ const combinedData = [
   ...westBluffSouthData,
   ...westBluffCentralData,
   ...westBluffNorthData,
-  // ...minnesotaData,
-  // ...wisconsinData
 ];
 combinedData.forEach((data) => {
   const tempData = structuredClone(data);
@@ -189,8 +183,6 @@ export default function MapComponent() {
                   <>
                     {data.route} ({data.stars})
                     <br />
-                    {data.location}
-                    <br />
                     {data.rating}
                     <br />
                     <a href={data.url}>Link</a>
@@ -200,10 +192,6 @@ export default function MapComponent() {
             );
           })}
         </MapContainer>
-        {/* <MapList
-          visibleMarkers={visibleMarkers}
-          setHoveredMarker={setHoveredMarker}
-        /> */}
       </div>
     </div>
   );
