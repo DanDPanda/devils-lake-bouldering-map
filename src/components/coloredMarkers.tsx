@@ -89,17 +89,25 @@ const grey = new L.Icon({
 });
 
 const coloredMarkers = {
-  B: yellow,
-  "0": red,
-  "1": green,
-  "2": violet,
-  "3": orange,
-  "4": black,
-  "5": blue,
-  "6": grey,
-  "7": grey,
-  "8": grey,
-  "9": grey,
+  VB: yellow,
+  V0: red,
+  V1: green,
+  V2: violet,
+  V3: orange,
+  V4: black,
+  V5: blue,
+  V6: grey,
+  V7: grey,
+  V8: grey,
+  V9: grey,
+  V10: grey,
+  V11: grey,
+  V12: grey,
+  V13: grey,
+  V14: grey,
+  V15: grey,
+  V16: grey,
+  V17: grey,
 };
 
 export default coloredMarkers;

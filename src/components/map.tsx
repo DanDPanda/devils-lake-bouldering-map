@@ -54,12 +54,16 @@ combinedData.forEach((data) => {
       tempData[direction] -= 0.0001;
     }
   }
-  let vGrade;
-  if (tempData.Rating[1] === "." || tempData.Rating[1] === "-") {
-    const vLetter = tempData.Rating.indexOf("V");
-    vGrade = tempData.Rating[vLetter + 1] as keyof typeof coloredMarkers;
-  } else {
-    vGrade = tempData.Rating[1] as keyof typeof coloredMarkers;
+  let vGrade = tempData.Rating.split(" ").find((x: string) =>
+    x.includes("V")
+  ) as keyof typeof coloredMarkers;
+  if (vGrade.includes("+")) {
+    vGrade = vGrade.replace("+", "") as keyof typeof coloredMarkers;
+  }
+  if (vGrade.includes("-")) {
+    console.log("vGrade :>> ", vGrade);
+    vGrade = vGrade.split("-")[0] as keyof typeof coloredMarkers;
+    console.log("vGrade :>> ", vGrade);
   }
   markers.push({
     latitude: tempData["Area Latitude"],
@@ -69,7 +73,7 @@ combinedData.forEach((data) => {
     rating: tempData.Rating,
     stars: tempData["Avg Stars"],
     route: tempData.Route,
-    icon: coloredMarkers[vGrade] || coloredMarkers[0],
+    icon: coloredMarkers[vGrade] || coloredMarkers["V0"],
     zIndex: 0,
   });
 });
@@ -121,7 +125,7 @@ export default function MapComponent() {
     );
     items[item] = {
       ...items[item],
-      icon: coloredMarkers[1],
+      icon: coloredMarkers["V0"],
       zIndex: 100,
     };
 
