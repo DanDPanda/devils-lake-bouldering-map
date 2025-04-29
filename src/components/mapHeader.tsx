@@ -1,7 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface MarkerData {
   latitude: number;
@@ -11,6 +11,7 @@ interface MarkerData {
   rating: string;
   stars: number;
   route: string | number;
+  grade: string;
 }
 
 interface Props {
@@ -24,12 +25,8 @@ export default function MapHeader({
   markers,
   setCurrentMarkers,
 }: Props) {
-  const [isStarFilterOn, setIsStarFilterOn] = useState(true);
-  const [isChecked, setIsChecked] = useState(true);
-
-  useEffect(() => {
-    setCurrentMarkers(markers.filter((marker) => marker.stars >= 3.5));
-  }, []);
+  const [isStarFilterOn, setIsStarFilterOn] = useState(false);
+  const [gradeFilter, setGradeFilter] = useState<string | null>(null);
 
   return (
     <div
@@ -56,28 +53,63 @@ export default function MapHeader({
           type="checkbox"
           checked={isStarFilterOn}
           onChange={() => {
+            let tempMarkers = markers;
+
             if (isStarFilterOn) {
               setIsStarFilterOn(false);
-              setCurrentMarkers(markers);
             } else {
               setIsStarFilterOn(true);
-              setCurrentMarkers(
-                markers.filter((marker) => marker.stars >= 3.5)
+              tempMarkers = markers.filter((marker) => marker.stars >= 3.5);
+            }
+
+            if (gradeFilter !== null) {
+              tempMarkers = tempMarkers.filter(
+                (marker) => marker.grade === gradeFilter
               );
             }
+
+            setCurrentMarkers(tempMarkers);
           }}
         ></input>
       </div>
       <div style={{ display: "flex", alignItems: "end", gap: "4px" }}>
-        <span>Location:</span>
-        <select>
-          <option value="eastBluffNorth">East Bluff North</option>
-          <option value="eastBluffSouth">East Bluff South</option>
-          <option value="eastBluffSouthFace">East Bluff South Face</option>
-          <option value="southBluff">South Bluff</option>
-          <option value="westBluffSouth">West Bluff South</option>
-          <option value="westBluffCentral">West Bluff Central</option>
-          <option value="westBluffNorth">West Bluff North</option>
+        <span>Grade:</span>
+        <select
+          onChange={(e) => {
+            const selectedGrade = e.target.value;
+            let tempMarkers = markers;
+
+            if (selectedGrade === "") {
+              setGradeFilter(null);
+            } else {
+              setGradeFilter(selectedGrade);
+              tempMarkers = markers.filter(
+                (marker) => marker.grade === selectedGrade
+              );
+            }
+
+            if (isStarFilterOn) {
+              tempMarkers = tempMarkers.filter((marker) => marker.stars >= 3.5);
+            }
+
+            setCurrentMarkers(tempMarkers);
+          }}
+        >
+          <option value="">--</option>
+          <option value="VB">VB</option>
+          <option value="V0">V0</option>
+          <option value="V1">V1</option>
+          <option value="V2">V2</option>
+          <option value="V3">V3</option>
+          <option value="V4">V4</option>
+          <option value="V5">V5</option>
+          <option value="V6">V6</option>
+          <option value="V7">V7</option>
+          <option value="V8">V8</option>
+          <option value="V9">V9</option>
+          <option value="V10">V10</option>
+          <option value="V11">V11</option>
+          <option value="V12">V12</option>
         </select>
       </div>
     </div>

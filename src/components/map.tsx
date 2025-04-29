@@ -24,6 +24,7 @@ interface MarkerData {
   route: string | number;
   icon: Icon;
   zIndex: number;
+  grade: string;
 }
 
 const markers: MarkerData[] = [];
@@ -61,9 +62,7 @@ combinedData.forEach((data) => {
     vGrade = vGrade.replace("+", "") as keyof typeof coloredMarkers;
   }
   if (vGrade.includes("-")) {
-    console.log("vGrade :>> ", vGrade);
     vGrade = vGrade.split("-")[0] as keyof typeof coloredMarkers;
-    console.log("vGrade :>> ", vGrade);
   }
   markers.push({
     latitude: tempData["Area Latitude"],
@@ -71,6 +70,7 @@ combinedData.forEach((data) => {
     url: tempData.URL,
     location: tempData.Location,
     rating: tempData.Rating,
+    grade: vGrade,
     stars: tempData["Avg Stars"],
     route: tempData.Route,
     icon: coloredMarkers[vGrade] || coloredMarkers["V0"],
