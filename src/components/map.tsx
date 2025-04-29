@@ -21,7 +21,7 @@ interface MarkerData {
   location: string;
   rating: string;
   stars: number;
-  route: string | number;
+  route: string;
   icon: Icon;
   zIndex: number;
   grade: string;
@@ -72,7 +72,7 @@ combinedData.forEach((data) => {
     rating: tempData.Rating,
     grade: vGrade,
     stars: tempData["Avg Stars"],
-    route: tempData.Route,
+    route: tempData.Route.toString(),
     icon: coloredMarkers[vGrade] || coloredMarkers["V0"],
     zIndex: 0,
   });

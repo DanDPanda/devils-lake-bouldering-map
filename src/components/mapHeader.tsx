@@ -2,6 +2,7 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { useState } from "react";
+import { marker } from "leaflet";
 
 interface MarkerData {
   latitude: number;
@@ -10,7 +11,7 @@ interface MarkerData {
   location: string;
   rating: string;
   stars: number;
-  route: string | number;
+  route: string;
   grade: string;
 }
 
@@ -27,6 +28,7 @@ export default function MapHeader({
 }: Props) {
   const [isStarFilterOn, setIsStarFilterOn] = useState(false);
   const [gradeFilter, setGradeFilter] = useState<string | null>(null);
+  const [searchFilter, setSearchFilter] = useState<string | null>(null);
 
   return (
     <div
@@ -68,6 +70,12 @@ export default function MapHeader({
               );
             }
 
+            if (searchFilter !== null) {
+              tempMarkers = tempMarkers.filter((marker) =>
+                marker.route.toLowerCase().includes(searchFilter)
+              );
+            }
+
             setCurrentMarkers(tempMarkers);
           }}
         ></input>
@@ -92,6 +100,12 @@ export default function MapHeader({
               tempMarkers = tempMarkers.filter((marker) => marker.stars >= 3.5);
             }
 
+            if (searchFilter !== null) {
+              tempMarkers = tempMarkers.filter((marker) =>
+                marker.route.toLowerCase().includes(searchFilter)
+              );
+            }
+
             setCurrentMarkers(tempMarkers);
           }}
         >
@@ -111,6 +125,37 @@ export default function MapHeader({
           <option value="V11">V11</option>
           <option value="V12">V12</option>
         </select>
+      </div>
+      <div style={{ display: "flex", alignItems: "end", gap: "4px" }}>
+        <span>Search:</span>
+        <input
+          type="text"
+          onChange={(e) => {
+            let tempMarkers = markers;
+
+            if (e.target.value === "") {
+              setSearchFilter(null);
+            } else {
+              tempMarkers = markers.filter((marker) =>
+                marker.route.toLowerCase().includes(e.target.value)
+              );
+
+              setSearchFilter(e.target.value);
+            }
+
+            if (isStarFilterOn) {
+              tempMarkers = tempMarkers.filter((marker) => marker.stars >= 3.5);
+            }
+
+            if (gradeFilter !== null) {
+              tempMarkers = tempMarkers.filter(
+                (marker) => marker.grade === gradeFilter
+              );
+            }
+
+            setCurrentMarkers(tempMarkers);
+          }}
+        ></input>
       </div>
     </div>
   );
