@@ -56,12 +56,12 @@ const markers: MarkerData[] = [];
 
 const combinedData = [
   ...eastBluffNorthData,
-  // ...eastBluffSouthData,
-  // ...eastBluffSouthFaceData,
-  // ...southBluffData,
-  // ...westBluffSouthData,
-  // ...westBluffCentralData,
-  // ...westBluffNorthData
+  ...eastBluffSouthData,
+  ...eastBluffSouthFaceData,
+  ...southBluffData,
+  ...westBluffSouthData,
+  ...westBluffCentralData,
+  ...westBluffNorthData,
   // ...minnesotaData,
   // ...wisconsinData
 ];
@@ -153,6 +153,7 @@ export default function MapComponent() {
     <div
       style={{
         width: "100%",
+        height: "100%",
       }}
     >
       <MapHeader
@@ -165,13 +166,14 @@ export default function MapComponent() {
           display: "inline-flex",
           flexDirection: "row",
           width: "100%",
+          height: "100%",
         }}
       >
         <MapContainer
           center={minneapolisLongLat}
           zoom={15}
           scrollWheelZoom={true}
-          style={{ width: "100%", height: "900px" }}
+          style={{ width: "100%", height: "100%" }}
           ref={setMap}
         >
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -198,10 +200,10 @@ export default function MapComponent() {
             );
           })}
         </MapContainer>
-        <MapList
+        {/* <MapList
           visibleMarkers={visibleMarkers}
           setHoveredMarker={setHoveredMarker}
-        />
+        /> */}
       </div>
     </div>
   );

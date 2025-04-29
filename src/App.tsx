@@ -3,8 +3,7 @@ import Map from "./components/map";
 
 function App() {
   return (
-    <div>
-      <h1>Devil's Lake Map</h1>
+    <div style={{ height: "100%" }}>
       <Map />
     </div>
   );
