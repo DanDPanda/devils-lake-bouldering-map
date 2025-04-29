@@ -1,8 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { useState } from "react";
-import { marker } from "leaflet";
+import { useState, useEffect } from "react";
 
 interface MarkerData {
   latitude: number;
@@ -30,6 +29,27 @@ export default function MapHeader({
   const [gradeFilter, setGradeFilter] = useState<string | null>(null);
   const [searchFilter, setSearchFilter] = useState<string | null>(null);
 
+  useEffect(() => {
+    let tempMarkers = markers;
+    if (isStarFilterOn) {
+      tempMarkers = tempMarkers.filter((marker) => marker.stars >= 3.5);
+    }
+
+    if (gradeFilter !== null) {
+      tempMarkers = tempMarkers.filter(
+        (marker) => marker.grade === gradeFilter
+      );
+    }
+
+    if (searchFilter !== null) {
+      tempMarkers = tempMarkers.filter((marker) =>
+        marker.route.toLowerCase().includes(searchFilter)
+      );
+    }
+
+    setCurrentMarkers(tempMarkers);
+  }, [isStarFilterOn, gradeFilter, searchFilter, markers, setCurrentMarkers]);
+
   return (
     <div
       style={{
@@ -55,28 +75,11 @@ export default function MapHeader({
           type="checkbox"
           checked={isStarFilterOn}
           onChange={() => {
-            let tempMarkers = markers;
-
             if (isStarFilterOn) {
               setIsStarFilterOn(false);
             } else {
               setIsStarFilterOn(true);
-              tempMarkers = markers.filter((marker) => marker.stars >= 3.5);
             }
-
-            if (gradeFilter !== null) {
-              tempMarkers = tempMarkers.filter(
-                (marker) => marker.grade === gradeFilter
-              );
-            }
-
-            if (searchFilter !== null) {
-              tempMarkers = tempMarkers.filter((marker) =>
-                marker.route.toLowerCase().includes(searchFilter)
-              );
-            }
-
-            setCurrentMarkers(tempMarkers);
           }}
         ></input>
       </div>
@@ -84,29 +87,11 @@ export default function MapHeader({
         <span>Grade:</span>
         <select
           onChange={(e) => {
-            const selectedGrade = e.target.value;
-            let tempMarkers = markers;
-
-            if (selectedGrade === "") {
+            if (e.target.value === "") {
               setGradeFilter(null);
             } else {
-              setGradeFilter(selectedGrade);
-              tempMarkers = markers.filter(
-                (marker) => marker.grade === selectedGrade
-              );
+              setGradeFilter(e.target.value);
             }
-
-            if (isStarFilterOn) {
-              tempMarkers = tempMarkers.filter((marker) => marker.stars >= 3.5);
-            }
-
-            if (searchFilter !== null) {
-              tempMarkers = tempMarkers.filter((marker) =>
-                marker.route.toLowerCase().includes(searchFilter)
-              );
-            }
-
-            setCurrentMarkers(tempMarkers);
           }}
         >
           <option value="">--</option>
@@ -131,29 +116,11 @@ export default function MapHeader({
         <input
           type="text"
           onChange={(e) => {
-            let tempMarkers = markers;
-
             if (e.target.value === "") {
               setSearchFilter(null);
             } else {
-              tempMarkers = markers.filter((marker) =>
-                marker.route.toLowerCase().includes(e.target.value)
-              );
-
               setSearchFilter(e.target.value);
             }
-
-            if (isStarFilterOn) {
-              tempMarkers = tempMarkers.filter((marker) => marker.stars >= 3.5);
-            }
-
-            if (gradeFilter !== null) {
-              tempMarkers = tempMarkers.filter(
-                (marker) => marker.grade === gradeFilter
-              );
-            }
-
-            setCurrentMarkers(tempMarkers);
           }}
         ></input>
       </div>
