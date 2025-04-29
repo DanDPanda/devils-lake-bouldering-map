@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/devils-lake-bouldering-map/static/css/main.ff2d33cc.css",
-    "main.js": "/devils-lake-bouldering-map/static/js/main.b9513a3f.js",
+    "main.css": "/devils-lake-bouldering-map/static/css/main.33827b8d.css",
+    "main.js": "/devils-lake-bouldering-map/static/js/main.ce483e76.js",
     "static/js/453.26d6df95.chunk.js": "/devils-lake-bouldering-map/static/js/453.26d6df95.chunk.js",
     "index.html": "/devils-lake-bouldering-map/index.html",
-    "main.ff2d33cc.css.map": "/devils-lake-bouldering-map/static/css/main.ff2d33cc.css.map",
-    "main.b9513a3f.js.map": "/devils-lake-bouldering-map/static/js/main.b9513a3f.js.map",
+    "main.33827b8d.css.map": "/devils-lake-bouldering-map/static/css/main.33827b8d.css.map",
+    "main.ce483e76.js.map": "/devils-lake-bouldering-map/static/js/main.ce483e76.js.map",
     "453.26d6df95.chunk.js.map": "/devils-lake-bouldering-map/static/js/453.26d6df95.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ff2d33cc.css",
-    "static/js/main.b9513a3f.js"
+    "static/css/main.33827b8d.css",
+    "static/js/main.ce483e76.js"
   ]
 }
