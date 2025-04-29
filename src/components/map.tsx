@@ -10,7 +10,7 @@ import { westBluffNorthData } from "../data/west-bluff-north";
 import { eastBluffNorthData } from "../data/east-bluff-north";
 import { eastBluffSouthData } from "../data/east-bluff-south";
 import { eastBluffSouthFaceData } from "../data/east-bluff-south-face";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import MapHeader from "./mapHeader";
 import coloredMarkers from "./coloredMarkers";
 
@@ -86,21 +86,24 @@ export default function MapComponent() {
   const [currentMarkers, setCurrentMarkers] = useState(markers);
   const [visibleMarkers, setVisibleMarkers] = useState<MarkerData[]>([]);
 
-  const recalculateMarkers = (m: Map) => {
-    const mapBounds = m.getBounds();
-    const northEast = mapBounds.getNorthEast();
-    const southWest = mapBounds.getSouthWest();
-    const tempVisibleMarkers = currentMarkers.filter((marker) => {
-      return (
-        marker.latitude <= northEast.lat &&
-        marker.latitude >= southWest.lat &&
-        marker.longitude <= northEast.lng &&
-        marker.longitude >= southWest.lng
-      );
-    });
+  const recalculateMarkers = useCallback(
+    (m: Map) => {
+      const mapBounds = m.getBounds();
+      const northEast = mapBounds.getNorthEast();
+      const southWest = mapBounds.getSouthWest();
+      const tempVisibleMarkers = currentMarkers.filter((marker) => {
+        return (
+          marker.latitude <= northEast.lat &&
+          marker.latitude >= southWest.lat &&
+          marker.longitude <= northEast.lng &&
+          marker.longitude >= southWest.lng
+        );
+      });
 
-    setVisibleMarkers(tempVisibleMarkers);
-  };
+      setVisibleMarkers(tempVisibleMarkers);
+    },
+    [currentMarkers]
+  );
 
   map?.on("zoom", () => {
     recalculateMarkers(map);
@@ -116,7 +119,7 @@ export default function MapComponent() {
     if (map) {
       recalculateMarkers(map);
     }
-  }, [map, currentMarkers]);
+  }, [map, currentMarkers, recalculateMarkers]);
 
   const f = useMemo(() => {
     const items = [...visibleMarkers];
