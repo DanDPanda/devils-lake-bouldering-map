@@ -17,7 +17,7 @@ interface MarkerData {
 interface Props {
   visibleMarkers: MarkerData[];
   markers: MarkerData[];
-  setCurrentMarkers: (markers: MarkerData[]) => void;
+  setCurrentMarkers: (markers: any) => void;
 }
 
 export default function MapHeader({

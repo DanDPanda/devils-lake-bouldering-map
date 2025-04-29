@@ -14,7 +14,7 @@ interface MarkerData {
 }
 
 interface MapListProps {
-  setHoveredMarker: (marker: MarkerData | null) => void;
+  setHoveredMarker: (marker: any) => void;
   visibleMarkers: MarkerData[];
 }
 
