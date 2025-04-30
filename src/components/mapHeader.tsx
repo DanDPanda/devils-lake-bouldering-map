@@ -70,7 +70,7 @@ export default function MapHeader({
     >
       <span>Visible Markers: {visibleMarkers.length}</span>
       <div style={{ display: "flex", alignItems: "end" }}>
-        <span>3.5+ Filter:</span>
+        <span>3.5+ Stars Only:</span>
         <input
           type="checkbox"
           checked={isStarFilterOn}
@@ -114,6 +114,7 @@ export default function MapHeader({
       <div style={{ display: "flex", alignItems: "end", gap: "4px" }}>
         <span>Search:</span>
         <input
+          style={{ fontSize: "16px" }}
           type="text"
           onChange={(e) => {
             if (e.target.value === "") {
