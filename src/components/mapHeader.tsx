@@ -119,7 +119,7 @@ export default function MapHeader({
             if (e.target.value === "") {
               setSearchFilter(null);
             } else {
-              setSearchFilter(e.target.value);
+              setSearchFilter(e.target.value.toLowerCase());
             }
           }}
         ></input>
