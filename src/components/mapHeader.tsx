@@ -69,9 +69,10 @@ export default function MapHeader({
       }}
     >
       <span>Visible Markers: {visibleMarkers.length}</span>
-      <div style={{ display: "flex", alignItems: "end" }}>
-        <span>3.5+ Stars Only:</span>
+      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px" }}>
+        <span>3.5+ Stars:</span>
         <input
+          style={{ fontSize: "16px" }}
           type="checkbox"
           checked={isStarFilterOn}
           onChange={() => {
@@ -83,9 +84,10 @@ export default function MapHeader({
           }}
         ></input>
       </div>
-      <div style={{ display: "flex", alignItems: "end", gap: "4px" }}>
+      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px" }}>
         <span>Grade:</span>
         <select
+          style={{ fontSize: "16px" }}
           onChange={(e) => {
             if (e.target.value === "") {
               setGradeFilter(null);
@@ -111,7 +113,7 @@ export default function MapHeader({
           <option value="V12">V12</option>
         </select>
       </div>
-      <div style={{ display: "flex", alignItems: "end", gap: "4px" }}>
+      <div style={{ display: "flex", alignItems: "flex-end", gap: "4px" }}>
         <span>Search:</span>
         <input
           style={{ fontSize: "16px" }}
