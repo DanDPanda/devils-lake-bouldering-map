@@ -20,12 +20,30 @@ interface Props {
   setCurrentMarkers: (markers: any) => void;
 }
 
+const favs = [
+  "Big Bud Arete",
+  "Good Morning Veruca",
+  "Flux Boulder Classic",
+  "Super Slab",
+  "Saddle Sores",
+  "Imp Act",
+  "Sunny & 60's",
+  "Smooth Operator",
+  "Stairway",
+  "Amazing Pillar",
+  "Magnum PI",
+  "A Slab Called Spot",
+  "The Aviary",
+  "Baby Crane",
+];
+
 export default function MapHeader({
   visibleMarkers,
   markers,
   setCurrentMarkers,
 }: Props) {
   const [isStarFilterOn, setIsStarFilterOn] = useState(false);
+  const [isFavsFilterOn, setIsFavsFilterOn] = useState(false);
   const [gradeFilter, setGradeFilter] = useState<string | null>(null);
   const [searchFilter, setSearchFilter] = useState<string | null>(null);
 
@@ -35,10 +53,29 @@ export default function MapHeader({
       tempMarkers = tempMarkers.filter((marker) => marker.stars >= 3.5);
     }
 
-    if (gradeFilter !== null) {
-      tempMarkers = tempMarkers.filter(
-        (marker) => marker.grade === gradeFilter
+    if (isFavsFilterOn) {
+      tempMarkers = tempMarkers.filter((marker) =>
+        favs.some((fav) => fav === marker.route)
       );
+    }
+
+    if (gradeFilter !== null) {
+      if (gradeFilter === "V6-") {
+        tempMarkers = tempMarkers.filter(
+          (marker) =>
+            marker.grade === "VB" ||
+            marker.grade === "V0" ||
+            marker.grade === "V1" ||
+            marker.grade === "V2" ||
+            marker.grade === "V3" ||
+            marker.grade === "V4" ||
+            marker.grade === "V5"
+        );
+      } else {
+        tempMarkers = tempMarkers.filter(
+          (marker) => marker.grade === gradeFilter
+        );
+      }
     }
 
     if (searchFilter !== null) {
@@ -48,7 +85,14 @@ export default function MapHeader({
     }
 
     setCurrentMarkers(tempMarkers);
-  }, [isStarFilterOn, gradeFilter, searchFilter, markers, setCurrentMarkers]);
+  }, [
+    isStarFilterOn,
+    isFavsFilterOn,
+    gradeFilter,
+    searchFilter,
+    markers,
+    setCurrentMarkers,
+  ]);
 
   return (
     <div
@@ -83,6 +127,19 @@ export default function MapHeader({
             }
           }}
         ></input>
+        <span>| Favs:</span>
+        <input
+          style={{ fontSize: "16px" }}
+          type="checkbox"
+          checked={isFavsFilterOn}
+          onChange={() => {
+            if (isFavsFilterOn) {
+              setIsFavsFilterOn(false);
+            } else {
+              setIsFavsFilterOn(true);
+            }
+          }}
+        ></input>
       </div>
       <div style={{ display: "flex", alignItems: "flex-end", gap: "4px" }}>
         <span>Grade:</span>
@@ -97,6 +154,7 @@ export default function MapHeader({
           }}
         >
           <option value="">--</option>
+          <option value="V6-">V6-</option>
           <option value="VB">VB</option>
           <option value="V0">V0</option>
           <option value="V1">V1</option>

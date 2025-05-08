@@ -3,16 +3,10 @@ import type { LatLngExpression, Map, Icon } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
-import { southBluffData } from "../data/south-bluff";
-import { westBluffSouthData } from "../data/west-bluff-south";
-import { westBluffCentralData } from "../data/west-bluff-central";
-import { westBluffNorthData } from "../data/west-bluff-north";
-import { eastBluffNorthData } from "../data/east-bluff-north";
-import { eastBluffSouthData } from "../data/east-bluff-south";
-import { eastBluffSouthFaceData } from "../data/east-bluff-south-face";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import MapHeader from "./mapHeader";
 import coloredMarkers from "./coloredMarkers";
+import { devilsLakeData } from "../data/devils-lake";
 
 interface MarkerData {
   latitude: number;
@@ -29,15 +23,7 @@ interface MarkerData {
 
 const markers: MarkerData[] = [];
 
-const combinedData = [
-  ...eastBluffNorthData,
-  ...eastBluffSouthData,
-  ...eastBluffSouthFaceData,
-  ...southBluffData,
-  ...westBluffSouthData,
-  ...westBluffCentralData,
-  ...westBluffNorthData,
-];
+const combinedData = devilsLakeData;
 combinedData.forEach((data) => {
   const tempData = structuredClone(data);
   while (
