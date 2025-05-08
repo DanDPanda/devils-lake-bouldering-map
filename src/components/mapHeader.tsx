@@ -37,6 +37,9 @@ const favs = [
   "Baby Crane",
   "Peaches",
   "Like Shaking Hands with God",
+  "Head Over Heels",
+  "P.Stachio",
+  "Moo Stache",
 ];
 
 export default function MapHeader({
