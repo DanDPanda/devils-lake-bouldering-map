@@ -35,6 +35,8 @@ const favs = [
   "A Slab Called Spot",
   "The Aviary",
   "Baby Crane",
+  "Peaches",
+  "Like Shaking Hands with God",
 ];
 
 export default function MapHeader({
